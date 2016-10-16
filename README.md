@@ -8,11 +8,35 @@ and not let anything else execute.
 This simple library provides an easy way to run code at different sample rates and removes the boilderplate code
 that you would otherwise have to write every time.
 
+###Usage
+
+Create an instance of Sampler in your sketch (directly in the file, not in setup or loop).
+The following creates a sampler instance that has not bee configured with a delay or freqency. You can
+alternatively pass a delay to the sampler constructor (in ms).
+
+```C++
+Sampler sampler();
+```
+
+Enable the sampler (this must be done before it will fire)... do this in setup() or anywhere else you wish
+to enable the sampler from.
+
+```C++
+sampler.enable();
+```
+
+Change the sampler freqency or interval
+
+```C++
+sampler.setDelay(100); // 100ms delay
+sampler.setFrequency(10); // 10 times per second (which equates to a 100ms delay)
+```
+
 ###Example Arduino sketch
 
 The following is also provided in the library 'examples' folder.
 
-````
+```C++
 // Include the 'Arduino Sampler' library
 #include "sampler.h"
 
@@ -50,7 +74,7 @@ void loop() {
 		// This code will run every 100ms while the sampler is enabled, as the sampler is configured
 	}
 }
-````
+```
 
 Installation
 ==============
