@@ -18,11 +18,12 @@ alternatively pass a delay to the sampler constructor (in ms).
 Sampler sampler();
 ```
 
-Enable the sampler (this must be done before it will fire)... do this in setup() or anywhere else you wish
-to enable the sampler from.
+Enable or disable the sampler (this must be done before it will fire)... do this in setup() or anywhere else you wish
+to enable/disable the sampler from.
 
 ```C++
 sampler.enable();
+sampler.disable();
 ```
 
 Change the sampler freqency or interval
@@ -30,6 +31,22 @@ Change the sampler freqency or interval
 ```C++
 sampler.setDelay(100); // 100ms delay
 sampler.setFrequency(10); // 10 times per second (which equates to a 100ms delay)
+```
+
+Wrap the code you want to run at the sample rate/every delay interval with an if statement calling
+sample.shouldSample(), this function will return true if it is time to take another sample.
+```C++
+// Surround the code to run at the sample rate with an if statement
+// calling sampler.shouldSample()
+if(sampler.shouldSample()) {
+	// This code will for every sample while the sampler is enabled, as the sampler is configured
+}
+```
+
+###Troubleshooting
+Try:
+```C++
+sampler.enable(); // ;)
 ```
 
 ###Example Arduino sketch
