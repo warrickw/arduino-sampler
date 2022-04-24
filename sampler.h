@@ -24,15 +24,17 @@ class Sampler {
 		bool shouldSample();
 		// Enable this sampler (it will always return false from shouldSample unless it is enabled)
 		void enable();
+		// Enable this sampler (it will always return false from shouldSample unless it is enabled)
+		void enable_and_trigger();
 		// Disable this sampler, causing it to always return false from shouldSample
 		void disable();
 	private:
 		// Whether this sampler is enabled or not
-		bool enabled;
+		bool enabled = false;
 		// The delay between samples
-		int delay;
+		int delay = 0;
 		// The time that the next sample should be triggered
-		unsigned long next_trigger;
+		unsigned long last_trigger = 0;
 };
 
 #endif
