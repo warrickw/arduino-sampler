@@ -3,7 +3,7 @@
 /**
 	Create a sampler with the specified delay between samples
  */
-Sampler::Sampler(int delay) : delay(delay)
+Sampler::Sampler(int delay_ms) : delay_us(delay_ms * 1000)
 {
 }
 
@@ -12,25 +12,34 @@ Sampler::Sampler(int delay) : delay(delay)
  */
 Sampler::Sampler()
 {
-	delay = 0;
+	delay_us = 0;
 }
 
-/**
- */
-void Sampler::setDelay(int delay)
+void Sampler::setDelayMs(int delay)
 {
 	// Set the delay
-	Sampler::delay = delay;
+	delay_us = delay * 1000;
 }
 
-int Sampler::getDelay()
+void Sampler::setDelayUs(unsigned long delay)
 {
-	return delay;
+	// Set the delay
+	delay_us = delay;
+}
+
+int Sampler::getDelayMs()
+{
+	return delay_us / 1000;
+}
+
+unsigned long Sampler::getDelayUs()
+{
+	return delay_us;
 }
 
 int Sampler::getFrequency()
 {
-	return 1000 / delay;
+	return 1000 / (delay_us / 1000);
 }
 
 /**
@@ -39,7 +48,7 @@ int Sampler::getFrequency()
 void Sampler::setFrequency(int frequency)
 {
 	// Set the delay by using the frequency
-	Sampler::delay = 1000 / frequency;
+	delay_us = (int)1000.0 / (float)frequency * 1000.0;
 }
 
 /**
@@ -48,7 +57,7 @@ void Sampler::setFrequency(int frequency)
 void Sampler::enable()
 {
 	enabled = true;
-	last_trigger = millis();
+	last_trigger_us = micros();
 }
 
 /**
@@ -57,7 +66,7 @@ void Sampler::enable()
 void Sampler::enable_and_trigger()
 {
 	enabled = true;
-	last_trigger = millis() - delay;
+	last_trigger_us = micros() - delay_us;
 }
 
 /**
@@ -76,9 +85,9 @@ bool Sampler::shouldSample()
 	if (!enabled)
 		return false;
 
-	if (millis() - last_trigger >= delay)
+	if (micros() - last_trigger_us >= delay_us)
 	{
-		last_trigger = millis();
+		last_trigger_us = micros();
 		return true;
 	}
 	else

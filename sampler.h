@@ -9,15 +9,17 @@
 class Sampler {
 	public:
 		// Construct a new Sampler with the given delay (in ms) between samples
-		Sampler(int delay);
+		Sampler(int delay_ms);
 		// Construct a new sampler (will have 'no' delay between samples, so you should call setDelay or setFrequency)
 		Sampler();
 		// Set the delay between samples
-		void setDelay(int delay);
+		void setDelayMs(int delay);
+		void setDelayUs(unsigned long delay);
 		// Set the frequency to sample (eg, 5hz - 5 times per second)
 		void setFrequency(int frequency);
 		// Get the delay between samples
-		int getDelay();
+		int getDelayMs();
+		unsigned long getDelayUs();
 		// Get the sample frequency
 		int getFrequency();
 		// Returns true if a sample should be taken
@@ -32,9 +34,9 @@ class Sampler {
 		// Whether this sampler is enabled or not
 		bool enabled = false;
 		// The delay between samples
-		int delay = 0;
+		unsigned long delay_us = 0;
 		// The time that the next sample should be triggered
-		unsigned long last_trigger = 0;
+		unsigned long last_trigger_us = 0;
 };
 
 #endif
