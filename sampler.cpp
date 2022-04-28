@@ -1,9 +1,10 @@
 #include "sampler.h"
+#include <Arduino.h>
 
 /**
 	Create a sampler with the specified delay between samples
  */
-Sampler::Sampler(int delay_ms) : delay_us(delay_ms * 1000)
+Sampler::Sampler(unsigned long delay_ms) : delay_us(delay_ms * 1000)
 {
 }
 
@@ -15,7 +16,7 @@ Sampler::Sampler()
 	delay_us = 0;
 }
 
-void Sampler::setDelayMs(int delay)
+void Sampler::setDelayMs(unsigned long delay)
 {
 	// Set the delay
 	delay_us = delay * 1000;
@@ -27,7 +28,7 @@ void Sampler::setDelayUs(unsigned long delay)
 	delay_us = delay;
 }
 
-int Sampler::getDelayMs()
+unsigned int Sampler::getDelayMs()
 {
 	return delay_us / 1000;
 }
@@ -37,7 +38,7 @@ unsigned long Sampler::getDelayUs()
 	return delay_us;
 }
 
-int Sampler::getFrequency()
+unsigned int Sampler::getFrequency()
 {
 	return 1000 / (delay_us / 1000);
 }
